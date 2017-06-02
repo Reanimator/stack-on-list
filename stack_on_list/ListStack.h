@@ -1,6 +1,7 @@
 #pragma once
 #include "LinkedList.h"
-
+#include <iostream>
+#include <fstream>
 
 template<class E>
 class ListStack
@@ -30,6 +31,14 @@ public:
 		E tmp = list->get(list->getEnd());
 		list->removeEnd();
 		return tmp;
+	}
+
+	void write_to_file()
+	{
+		std::ofstream file("stack.txt");
+		for (node<E>* i = list->getStart(); !list->isEnd(i); i = list->getNext(i))
+			file << list->get(i) << std::endl;
+		file.close();
 	}
 
 	size_t size()
