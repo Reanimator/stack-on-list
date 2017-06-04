@@ -21,12 +21,14 @@ void main()
 	lq.add(75);
 
 	std::cout << std::endl;
+	lt.write_to_file();
+	lq.write_to_file();
 	try
 	{
 		for (;;)
 			std::cout << lt.get() << "|";
 	}
-	catch (int ee)
+	catch (...)
 	{
 		std::cout << std::endl << "stack is empty"<<std::endl;
 	}

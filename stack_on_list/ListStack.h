@@ -35,9 +35,21 @@ public:
 
 	void write_to_file()
 	{
+		LinkedList<E> *tmp = new LinkedList<E>;
 		std::ofstream file("stack.txt");
-		for (node<E>* i = list->getStart(); !list->isEnd(i); i = list->getNext(i))
-			file << list->get(i) << std::endl;
+		try
+		{
+			while (true)
+			{
+				tmp->addStart(get());
+				file << tmp->get(tmp->getStart()) << std::endl;
+			}
+		}
+		catch (...)
+		{
+			delete list;
+			list = tmp;
+		}
 		file.close();
 	}
 

@@ -35,10 +35,13 @@ public:
 	void write_to_file()
 	{
 		std::ofstream file("queue.txt");
-		for (node<E>* i = list->getStart(); !list->isEnd(i); i = list->getNext(i))
+		node<E>* i;
+		for (i = list->getStart(); !list->isEnd(i); i = list->getNext(i))
 			file << list->get(i) << std::endl;
+		file << list->get(i) << std::endl;
 		file.close();
 	}
+	
 
 	size_t size()
 	{

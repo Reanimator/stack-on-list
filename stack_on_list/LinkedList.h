@@ -36,7 +36,9 @@ public:
 
 	void addEnd(E e);
 
-	E get(node<E>*);
+	void addStart(E e);
+
+	E get(node<E>*); 
 	
 	bool isEmpty();
 	void removeEnd();
@@ -56,7 +58,7 @@ public:
 	{
 		if (tmp->next == head)
 			return true;
-
+		return false;
 	}
 	//*/
 
@@ -69,7 +71,7 @@ void LinkedList<E>::addEnd(E e)
 	tmp->data = e;
 	if (head == 0)
 	{
-		head = tail = tmp;
+		tmp->next =  head = tail = tmp;
 	}
 	else
 	{
@@ -77,6 +79,22 @@ void LinkedList<E>::addEnd(E e)
 		tail = tmp;
 	}
 	tmp->next = head;
+	++count;
+}
+template<class E>
+void LinkedList<E>::addStart(E e)
+{
+	node<E> *tmp = new node<E>;
+	tmp->data = e;
+	if (head == 0)
+	{
+		tmp->next = head = tail = tmp;
+	}
+	else
+	{
+		tmp->next = head;
+		tail->next = head = tmp;
+	}
 	++count;
 }
 
@@ -98,7 +116,7 @@ inline bool LinkedList<E>::isEmpty()
 template<class E>
 inline void LinkedList<E>::removeEnd()
 {
-	if (count == 1)
+		if (count == 1)
 	{
 		delete head;
 		head = tail = 0;
@@ -106,18 +124,13 @@ inline void LinkedList<E>::removeEnd()
 		return;
 	}
 
-	node<E> *prev = head;
-	for (node<E> *i = head; isEnd(i); i = i->next)
-	{
-		if (i == tail)
-		{
-			tail = prev;
-			delete tail->next;
-			tail->next = head;
-			break;
-		}
+	node<E> *prev;
+	for (node<E>* i = prev = head; !isEnd(i); i = i->next)
 		prev = i;
-	}
+	
+	delete prev->next;
+	prev->next = head;
+	tail = prev;
 	--count;
 }
 template<class E>
@@ -132,7 +145,7 @@ inline void LinkedList<E>::removeStart()
 	}
 
 	node<E> *prev = head;
-	for (node<E> *i = head; isEnd(i); i = i->next)
+	for (node<E> *i = head; !isEnd(i); i = i->next)
 	{
 		if (i == head)
 		{
